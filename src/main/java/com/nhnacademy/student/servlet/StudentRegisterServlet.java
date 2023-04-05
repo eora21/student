@@ -25,7 +25,8 @@ public class StudentRegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/student/register.jsp").forward(req, resp);
+//        req.getRequestDispatcher("/student/register.jsp").forward(req, resp);
+        req.setAttribute("view", "/student/register.jsp");
     }
 
     @Override
@@ -53,6 +54,7 @@ public class StudentRegisterServlet extends HttpServlet {
             throw new IllegalArgumentException("옳지 않은 값이 전달되었습니다.");
         }
 
-        resp.sendRedirect("/student/view?id=" + id);
+//        resp.sendRedirect("/student/view?id=" + id);
+        req.setAttribute("view", "/student/view?id=" + id);
     }
 }

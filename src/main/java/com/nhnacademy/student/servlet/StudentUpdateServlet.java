@@ -32,7 +32,8 @@ public class StudentUpdateServlet extends HttpServlet {
         }
 
         req.setAttribute("student", studentRepository.getStudentById(id));
-        req.getRequestDispatcher("/student/register.jsp").forward(req, resp);
+//        req.getRequestDispatcher("/student/register.jsp").forward(req, resp);
+        req.setAttribute("view", "/student/register.jsp");
     }
 
     @Override

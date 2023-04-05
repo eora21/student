@@ -32,9 +32,9 @@
         <td>${student.age}</td>
     </tr>
 </table>
-<a href="/student/list">리스트</a>
-<a href="/student/update?id=${student.id}">수정</a>
-<form method="post" action="/student/delete">
+<a href="/student/list.do">리스트</a>
+<a href="/student/update.do?id=${student.id}">수정</a>
+<form method="post" action="/student/delete.do">
     <input type="text" name="id" value="${student.id}" hidden="hidden">
     <button type="submit">삭제</button>
 </form>

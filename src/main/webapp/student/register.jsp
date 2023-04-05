@@ -16,14 +16,14 @@
 <c:set var="student" value="${requestScope.get('student')}"/>
 <c:choose>
     <c:when test="${empty student}">
-        <c:set var="to" value="register"/>
+        <c:set var="to" value="register.do"/>
         <c:set var="submit" value="등록"/>
         <c:set var="readonly" value=""/>
         <c:set var="man" value="checked"/>
         <c:set var="woman" value=""/>
     </c:when>
     <c:otherwise>
-        <c:set var="to" value="update"/>
+        <c:set var="to" value="update.do"/>
         <c:set var="submit" value="수정"/>
         <c:set var="readonly" value="readonly"/>
         <c:choose>
