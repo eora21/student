@@ -1,7 +1,17 @@
 package com.nhnacademy.student.servlet;
 
+import com.nhnacademy.student.controller.Command;
+import com.nhnacademy.student.controller.StudentDeleteController;
+import com.nhnacademy.student.controller.StudentListController;
+import com.nhnacademy.student.controller.StudentRegisterController;
+import com.nhnacademy.student.controller.StudentRegisterFormController;
+import com.nhnacademy.student.controller.StudentUpdateController;
+import com.nhnacademy.student.controller.StudentUpdateFormController;
+import com.nhnacademy.student.controller.StudentViewController;
+import com.nhnacademy.student.init.ControllerFactory;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,42 +22,39 @@ import java.io.IOException;
 @Slf4j
 @WebServlet(name = "frontServlet", urlPatterns = "*.do")
 public class FrontServlet extends HttpServlet {
-    private static final String REDIRECT_PREFIX = "redirect";
+    public static final String REDIRECT_PREFIX = "redirect:";
+    private ControllerFactory controllerFactory;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        controllerFactory = (ControllerFactory) config.getServletContext().getAttribute("controllerFactory");
+    }
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        resp.setCharacterEncoding("UTF-8");
+        try {
+            req.setCharacterEncoding("UTF-8");
+            resp.setContentType("text/html");
+            resp.setCharacterEncoding("UTF-8");
 
-        String servletPath = resolveServlet(req.getServletPath());
-        log.info(req.getServletPath());
-        req.getRequestDispatcher(servletPath).include(req, resp);
+            Command command = resolveCommand(req.getServletPath(), req.getMethod());
+            String view = command.excute(req, resp);
 
-        String view = (String) req.getAttribute("view");
+            if (view.startsWith(REDIRECT_PREFIX)) {
+                resp.sendRedirect(view.substring(REDIRECT_PREFIX.length()));
+                return;
+            }
 
-        if (view.startsWith(REDIRECT_PREFIX)) {
-            resp.sendRedirect(view.substring(REDIRECT_PREFIX.length() + 1));
-            return;
+            req.getRequestDispatcher(view).forward(req, resp);
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            req.getRequestDispatcher("/error.jsp").forward(req, resp);
         }
-
-        req.getRequestDispatcher(view).forward(req, resp);
     }
 
-    private String resolveServlet(String servletPath) {
-        String processingServletPath = null;
-
-        if ("/student/list.do".equals(servletPath)) {
-            processingServletPath = "/student/list";
-        } else if ("/student/delete.do".equals(servletPath)) {
-            processingServletPath = "/student/delete";
-        } else if ("/student/register.do".equals(servletPath)) {
-            processingServletPath = "/student/register";
-        } else if ("/student/update.do".equals(servletPath)) {
-            processingServletPath = "/student/update";
-        } else if ("/student/view.do".equals(servletPath)) {
-            processingServletPath = "/student/view";
-        }
-
-        return processingServletPath;
+    private Command resolveCommand(String servletPath, String method){
+        return controllerFactory.getBean(method, servletPath);
     }
+
 }

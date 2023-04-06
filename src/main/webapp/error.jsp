@@ -12,30 +12,31 @@
     <title>error</title>
 </head>
 <body>
-<table>
-    <tbody>
-    <tr>
-        <th>status_code</th>
-        <td>${requestScope.get("status_code")}</td>
-    </tr>
-    <tr>
-        <th>exception_type</th>
-        <td>${requestScope.get("exception_type")}</td>
-    </tr>
-    <tr>
-        <th>message</th>
-        <td>${requestScope.get("message")}</td>
-    </tr>
-    <tr>
-        <th>exception</th>
-        <td>${requestScope.get("exception")}</td>
-    </tr>
-    <tr>
-        <th>request_uri</th>
-        <td>${requestScope.get("request_uri")}</td>
-    </tr>
-    </tbody>
+<%--<table>--%>
+<%--    <tbody>--%>
+<%--    <tr>--%>
+<%--        <th>status_code</th>--%>
+<%--        <td>${requestScope.get("status_code")}</td>--%>
+<%--    </tr>--%>
+<%--    <tr>--%>
+<%--        <th>exception_type</th>--%>
+<%--        <td>${requestScope.get("exception_type")}</td>--%>
+<%--    </tr>--%>
+<%--    <tr>--%>
+<%--        <th>message</th>--%>
+<%--        <td>${requestScope.get("message")}</td>--%>
+<%--    </tr>--%>
+<%--    <tr>--%>
+<%--        <th>exception</th>--%>
+<%--        <td>${requestScope.get("exception")}</td>--%>
+<%--    </tr>--%>
+<%--    <tr>--%>
+<%--        <th>request_uri</th>--%>
+<%--        <td>${requestScope.get("request_uri")}</td>--%>
+<%--    </tr>--%>
+<%--    </tbody>--%>
 
-</table>
+<%--</table>--%>
+<h1>${requestScope.get("error")}</h1>
 </body>
 </html>
