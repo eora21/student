@@ -2,10 +2,11 @@ package com.nhnacademy.student.listener;
 
 
 import com.nhnacademy.student.gender.Gender;
-import com.nhnacademy.student.repository.MapStudentRepository;
+import com.nhnacademy.student.repository.JsonStudentRepository;
 import com.nhnacademy.student.repository.StudentRepository;
 import com.nhnacademy.student.student.Student;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -16,7 +17,11 @@ public class WebApplicationListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        StudentRepository studentRepository = new MapStudentRepository();
+        ServletContext servletContext = sce.getServletContext();
+        String jsonFilePath = "/WEB-INF/classes/json";
+        String realFilePath = servletContext.getRealPath(jsonFilePath);
+
+        StudentRepository studentRepository = new JsonStudentRepository(realFilePath);
         Random random = new Random();
 
         for (int cnt = 0; cnt < 10; cnt++) {
