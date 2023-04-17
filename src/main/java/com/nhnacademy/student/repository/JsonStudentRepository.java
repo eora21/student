@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.nhnacademy.student.student.Student;
+import com.nhnacademy.student.domain.Student;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;

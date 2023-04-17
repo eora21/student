@@ -1,0 +1,10 @@
+table {
+    width: 100%;
+    border: 1px solid gray;
+}
+th, td {
+    border: 1px solid gray;
+}
+.error-message {
+    color: red;
+}
